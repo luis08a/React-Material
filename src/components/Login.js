@@ -12,14 +12,7 @@ import './Login.css'
 
 
 export class Login extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = { 
-            text: '',
-            priority: '',
-            dueDate: ''
-        }
-    }
+    
     render() {
         return (
             <React.Fragment>
@@ -50,6 +43,7 @@ export class Login extends React.Component {
                                 variant="contained"
                                 color="primary"
                                 className="submit"
+                                onClick={this.handleSubmit}
                             >
                                 Sign in
                             </Button>
@@ -59,21 +53,14 @@ export class Login extends React.Component {
             </React.Fragment>
         );
     }
-    handleChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+
     handleSubmit(e) {
-        e.preventDefault();
-        if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
-            return;
-        if (localStorage.getItem("token") !== (this.state.text))
-            return;
+        let em = document.querySelector('#email').value
+        let pwd = document.querySelector('#password').value
+        console.log(em,pwd);
         
-        this.setState(prevState => ({
-            text: '',
-            priority: ''
-        }));
+        e.preventDefault();
+        if (localStorage.getItem(em) === pwd)
+            localStorage.setItem("isLoggedIn", true);
     }
 }

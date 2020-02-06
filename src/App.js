@@ -12,11 +12,13 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+        localStorage.setItem("isLoggedIn",false)
+        console.log(localStorage.getItem("isLoggedIn"));
+        
         this.state = {
-            isLoggenIn: false
+            isLoggedIn: localStorage.getItem("isLoggedIn")
         }
-
-        localStorage.setItem('Luis', 'pasword');
+        localStorage.setItem('user', 'password');
     }
 
     render() {
@@ -32,11 +34,11 @@ class App extends Component {
                     <br />
                     <ul>
                         <li><Link to="/">Login</Link></li>
-                        {this.state.isLoggenIn && <li><Link to="/todo">Todo</Link></li>}
+                        {this.state.isLoggedIn=== 'true' && <li><Link to="/todo">Todo</Link></li>}
                     </ul>
                     <div>
                         <Route exact path="/" component={this.LoginView} />
-                        {this.state.isLoggenIn && <Route path="/todo" component={this.TodoAppView} />}
+                        {this.state.isLoggedIn=== 'true' && <Route path="/todo" component={this.TodoAppView} />}
                     </div>
                 </div>
             </Router>
