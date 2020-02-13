@@ -8,20 +8,21 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { Login } from './components/Login';
 import { TodoApp } from './components/TodoApp';
 
+
+localStorage.setItem('user', 'password');
+
 class App extends Component {
 
     constructor(props) {
         super(props);
-        localStorage.setItem("isLoggedIn",false)
-        console.log(localStorage.getItem("isLoggedIn"));
-        
+
         this.state = {
             isLoggedIn: localStorage.getItem("isLoggedIn")
         }
-        localStorage.setItem('user', 'password');
     }
 
     render() {
+        
         return (
             <Router>
                 <div className="App">
@@ -32,13 +33,8 @@ class App extends Component {
 
                     <br />
                     <br />
-                    <ul>
-                        <li><Link to="/">Login</Link></li>
-                        {this.state.isLoggedIn=== 'true' && <li><Link to="/todo">Todo</Link></li>}
-                    </ul>
                     <div>
-                        <Route exact path="/" component={this.LoginView} />
-                        {this.state.isLoggedIn=== 'true' && <Route path="/todo" component={this.TodoAppView} />}
+                        <Route exact path="/" component={(this.state.isLoggedIn == 'true' ? this.TodoAppView : this.LoginView)} />
                     </div>
                 </div>
             </Router>
@@ -46,13 +42,27 @@ class App extends Component {
     }
 
     LoginView = () => {
-        return <Login />
+        return <Login handleLogin={this.LogIn} />
     }
     TodoAppView = () => {
         return <TodoApp />
     }
-    LogIn = () => {
+    LogIn = (e) => {
+        let em = document.querySelector('#email').value
+        let pwd = document.querySelector('#password').value
 
+        if (localStorage.getItem(em) === pwd){
+            localStorage.setItem("isLoggedIn", true);
+            this.setState({ isLoggedIn: true });
+            window.location.href="/"
+        }
+        else{
+            return
+        }
+        
+        console.log(localStorage.getItem("isLoggedIn"));
+        
+        
     }
 }
 

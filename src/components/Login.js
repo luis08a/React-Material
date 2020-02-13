@@ -8,11 +8,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import './Login.css'
+import './Login.css';
 
 
 export class Login extends React.Component {
-    
+    constructor(props){
+        super(props)
+    }
     render() {
         return (
             <React.Fragment>
@@ -43,7 +45,7 @@ export class Login extends React.Component {
                                 variant="contained"
                                 color="primary"
                                 className="submit"
-                                onClick={this.handleSubmit}
+                                onClick={this.props.handleLogin}
                             >
                                 Sign in
                             </Button>
@@ -52,15 +54,5 @@ export class Login extends React.Component {
                 </main>
             </React.Fragment>
         );
-    }
-
-    handleSubmit(e) {
-        let em = document.querySelector('#email').value
-        let pwd = document.querySelector('#password').value
-        console.log(em,pwd);
-        
-        e.preventDefault();
-        if (localStorage.getItem(em) === pwd)
-            localStorage.setItem("isLoggedIn", true);
     }
 }
